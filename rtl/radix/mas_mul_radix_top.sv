@@ -158,79 +158,7 @@ add4
 );
 
 assign res_w = (flag16 ? {-res16,31'b0} : {res16,32'b0}) + tmp4;
-/*
-mas_radix_adder 
-add0
-(
-.in1    ({32'b0,res0}),
-.in2    ({30'b0,res1,2'b0}),
-.in3    ({28'b0,res2,4'b0}),
-.in4    ({26'b0,res3,6'b0}),
-.flag1  (flag0),
-.flag2  (flag1),
-.flag3  (flag2),
-.flag4  (flag3),
-.res    (tmp0)
-);
 
-mas_radix_adder 
-add1
-(
-.in1    (tmp0),
-.in2    ({24'b0,res4,8'b0}),
-.in3    ({22'b0,res5,10'b0}),
-.in4    ({20'b0,res6,12'b0}),
-.flag1  (1'b0),
-.flag2  (flag4),
-.flag3  (flag5),
-.flag4  (flag6),
-.res    (tmp1)
-);
-
-mas_radix_adder 
-add2
-(
-.in1    (tmp1),
-.in2    ({18'b0,res7,14'b0}),
-.in3    ({16'b0,res8,16'b0}),
-.in4    ({14'b0,res9,18'b0}),
-.flag1  (1'b0),
-.flag2  (flag7),
-.flag3  (flag8),
-.flag4  (flag9),
-.res    (tmp2)
-);
-
-mas_radix_adder 
-add3
-(
-.in1    (tmp2),
-.in2    ({12'b0,res10,20'b0}),
-.in3    ({10'b0,res11,22'b0}),
-.in4    ({8'b0,res12,24'b0}),
-.flag1  (1'b0),
-.flag2  (flag10),
-.flag3  (flag11),
-.flag4  (flag12),
-.res    (tmp3)
-);
-
-mas_radix_adder 
-add4
-(
-.in1    (tmp3),
-.in2    ({6'b0,res13,26'b0}),
-.in3    ({4'b0,res14,28'b0}),
-.in4    ({2'b0,res15,30'b0}),
-.flag1  (1'b0),
-.flag2  (flag13),
-.flag3  (flag14),
-.flag4  (flag15),
-.res    (tmp4)
-);
-
-assign res_w = (flag16 ? {-res16,32'b0} : {res16,32'b0}) + tmp4;
-*/
 always_ff@(posedge clk, negedge rstn)
 begin
   if(!rstn)
