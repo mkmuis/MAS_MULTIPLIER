@@ -14,8 +14,11 @@ There are 2 multiplier designs using different algorithm: Radix 4 and Vedic. The
 ## How to run
 
 At directory MAS_MULTIPLIER, configure for multiplier design, testbench and mode. 
+
 MUL = vedic, radix
+
 TB = vtb, svtb
+
 MODE = rtl, gls
 
 To run vedic design in rtl, with SystemVerilog testbench
