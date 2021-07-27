@@ -15,64 +15,57 @@
 //                                                                        //
 ////////////////////////////////////////////////////////////////////////////
 
-`include "mas_mul_packet.sv"
-`include "mas_mul_generator.sv"
-`include "mas_mul_driver.sv"
-`include "mas_mul_monitor.sv"
-`include "mas_mul_scoreboard.sv"
+class Packet;
+ 
+//packet class items
+randc bit [31:0] in1;
+randc bit [31:0] in2;
+bit      [63:0] res;
+longint         test_size;  
+ 
+endclass:Packet
 
-class Environment;
+class AltFPacket extends Packet;
  
-Generator  gen;
-Driver     driv;
-Monitor    mon;
-ScoreBoard scb;
- 
-mailbox Gen2Driv;
-mailbox Mon2Scb;
- 
-virtual mul_intf mul_vif;
- 
-function new(virtual mul_intf mul_vif);
-  this.mul_vif = mul_vif;
-  //Using same handle across generator and driver
-  Gen2Driv = new();
-  Mon2Scb = new();
-  //Constructing individual components 
-  gen = new(Gen2Driv);
-  driv = new(mul_vif,Gen2Driv);
-  mon  = new(mul_vif,Mon2Scb);
-  scb  = new(Mon2Scb);
-endfunction
+constraint 
+in1_altf 
+{
+in1 inside {32'h0000_000F,
+            32'h0000_00F0,
+            32'h0000_0F00,
+            32'h0000_F000,
+            32'h000F_0000,
+            32'h00F0_0000,
+            32'h0F00_0000,
+            32'hF000_0000,
+            32'h0000_00FF,
+            32'h0000_FF00,
+            32'h00FF_0000,
+            32'hFF00_0000,
+            32'h0000_FFFF,
+            32'hFFFF_0000,
+            32'hFFFF_FFFF
+           };
+}       
 
-task pre_test();
-  $display("\n[ENVIRONMENT SETUP] ");
-  driv.rstn();
-endtask
- 
-task test();
-  $display("-> #RUNNING TEST#");
-  fork
-  gen.main();
-  driv.main();
-  mon.main();
-  scb.main();    
-  join_any
-endtask
- 
-task post_test();
-  wait(mon.PacketCount > gen.random_test_size);
-  wait(mon.AltFPacketCount > gen.altf_test_size);
-  $display("---------------------------------------");
-  $display("\n\tSimulation Ended\n");
-  $display("---------------------------------------");
-endtask 
- 
-task run;
-  pre_test();
-  test();
-  post_test();
-  $finish;
-endtask
- 
-endclass
+constraint 
+in2_altf 
+{
+in2 inside {32'h0000_000F,
+            32'h0000_00F0,
+            32'h0000_0F00,
+            32'h0000_F000,
+            32'h000F_0000,
+            32'h00F0_0000,
+            32'h0F00_0000,
+            32'hF000_0000,
+            32'h0000_00FF,
+            32'h0000_FF00,
+            32'h00FF_0000,
+            32'hFF00_0000,
+            32'h0000_FFFF,
+            32'hFFFF_0000,
+            32'hFFFF_FFFF
+           };
+}       
+endclass:AltFPacket
